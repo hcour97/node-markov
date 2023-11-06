@@ -17,25 +17,22 @@ class MarkovMachine {
    *  {"the": ["cat", "hat"], "cat": ["in"], "in": ["the"], "hat": [null]} */
 
   makeChains() {
-    let chains = new Map()
+    let chains = new Array()
 
     for (let i=0; this.words.length; i++) {
       let word = this.words[i];
       let nextWord = this.words[i+1] || null;
 
-      if (chains.has(word)) {
-        chains.get(word).push(nextWord);
-      } else {
-        chains.set(word, nextWord);
-      }
+      if (chains.includes(word)) chains.get(word).push(nextWord);
+      else chains.set(word, nextWord);
     }
     chains = this.chains;
   }
 
-  /** pick a random choice from array */
-  static choice(ar) {
-    return ar[Math.floor(Math.random() * ar.length)]
-  }
+  // /** pick a random choice from array */
+  //   static choice(ar) {
+  //   return ar[Math.floor(Math.random() * ar.length)]
+  // }
 
   /** return random text from chains */
 
