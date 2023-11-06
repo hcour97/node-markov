@@ -19,7 +19,7 @@ class MarkovMachine {
   makeChains() {
     let chains = new Map()
 
-    for (i=0; this.words.length; i++) {
+    for (let i=0; this.words.length; i++) {
       let word = this.words[i];
       let nextWord = this.words[i+1] || null;
 
@@ -32,12 +32,33 @@ class MarkovMachine {
     chains = this.chains;
   }
 
+  /** pick a random choice from array */
+  static choice(ar) {
+    return ar[Math.floor(Math.random() * ar.length)]
+  }
 
   /** return random text from chains */
 
   makeText(numWords = 100) {
-    // TODO
+    // pick a random key to start
+    let keys = Array.from(this.chains.keys());
+    let key = MarkovMachine.choice(keys);
+    let out = [];
+
+    // produce markov chain until reaching termination word
+    while (out.length < numWords && key !== null) {
+      out.push(key);
+      // reset key
+      key = MarkovMachine.choice(this.chains.get(key));
+    }
+    return out.join("");
   }
 }
 
+module.exports = { 
+  MarkovMachine,
+};
+
 let mm = new MarkovMachine("the cat in the hat");
+mm.makeText();
+mm. makeText(numWords=50);
