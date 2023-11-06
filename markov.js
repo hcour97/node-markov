@@ -17,7 +17,19 @@ class MarkovMachine {
    *  {"the": ["cat", "hat"], "cat": ["in"], "in": ["the"], "hat": [null]} */
 
   makeChains() {
-    // TODO
+    let chains = new Map()
+
+    for (i=0; this.words.length; i++) {
+      let word = this.words[i];
+      let nextWord = this.words[i+1] || null;
+
+      if (chains.has(word)) {
+        chains.get(word).push(nextWord);
+      } else {
+        chains.set(word, nextWord);
+      }
+    }
+    chains = this.chains;
   }
 
 
@@ -27,3 +39,5 @@ class MarkovMachine {
     // TODO
   }
 }
+
+let mm = new MarkovMachine("the cat in the hat");
